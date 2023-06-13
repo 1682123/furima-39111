@@ -13,7 +13,6 @@
 
 ## Association
 - has_many :items
-- has_many :orders
 - has_many :buyer_records
 
 ## items テーブル
@@ -21,41 +20,45 @@
 | ---------------- | ---------- | ------------------------------ |
 | item_name        | string     | null: false                    |
 | item_description | text       | null: false                    |
-| category         | string     | null: false                    |
-| item_condition   | string     | null: false                    |
-| shipping_fee     | string     | null: false                    |
-| shipping_area    | string     | null: false                    |
-| shipping_day     | string     | null: false                    |
-| price            | integer    | null: false                    |
-| user_id          | references | null: false, foreign_key: true |
+| category_id      | integer    | null: false                    |
+| condition_id     | integer    | null: false                    |
+| shipping_fee_id  | integer    | null: false                    |
+| prefectures_id   | integer    | null: false                    |
+| shipping_days_id | integer    | null: false                    |
+| price            | string     | null: false                    |
+| user             | references | null: false, foreign_key: true |
 
 ## Association
 - belongs_to :user
-- has_one :order
+- has_many :buyer_records
+- belongs_to_active_hash :category
+- belongs_to_active_hash :condition
+- belongs_to_active_hash :shipping_fee
+- belongs_to_active_hash :prefectures
+- belongs_to_active_hash :shipping_days
 
 ## orders テーブル
-| Column       | Type       | Options                        |
-| ------------ | ---------- | ------------------------------ |
-| postcode     | integer    | null: false                    |
-| prefecture   | string     | null: false                    |
-| city         | string     | null: false                    |
-| block        | text       | null: false                    |
-| building     | text       |                                |
-| phone_number | integer    | null: false                    |
-| user_id      | references | null: false, foreign_key: true |
-| item_id      | references | null: false, foreign_key: true |
+| Column         | Type       | Options                        |
+| -------------- | ---------- | ------------------------------ |
+| postcode       | string     | null: false                    |
+| prefectures_id | integer    | null: false                    |
+| city           | string     | null: false                    |
+| block          | string     | null: false                    |
+| building       | string     |                                |
+| phone_number   | string     | null: false                    |
+| buyer_record   | references | null: false, foreign_key: true |
+
+## Association
+- belongs_to :buyer_records
+- belongs_to_active_hash :prefectures
+
+## buyer_records 
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+| user   | references | null: false, foreign_key: true |
+| item   | references | null: false, foreign_key: true |
 
 ## Association
 - belongs_to :user
 - belongs_to :item
-- has_many :buyer_records
-
-## buyer_records 
-| Column   | Type       | Options                        |
-| -------- | ---------- | ------------------------------ |
-| user_id  | references | null: false, foreign_key: true |
-| order_id | references | null: false, foreign_key: true |
-
-## Association
-- belongs_to :user
-- belongs_to :order
+- has_one :order
