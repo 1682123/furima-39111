@@ -26,8 +26,7 @@ class Item < ApplicationRecord
   validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" } 
   validates :shipping_day_id, numericality: { other_than: 1, message: "can't be blank" } 
 
-  with_options presence: true, format: { with: /\A[0-9]+\z/ } do
-    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 },
-     presence: { message: "can't be blank" }
+  with_options format: { with: /\A[0-9]+\z/ } do
+    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: " Please input 300~9,999,999" }
   end
 end
