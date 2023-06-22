@@ -8,8 +8,8 @@ function clac (){
     const profit = itemPriceValue - tax_fee;
     const taxArea = document.getElementById("add-tax-price");
     const profitArea = document.getElementById("profit");
-    taxArea.innerHTML = Math.round(tax_fee);
-    profitArea.innerHTML = Math.round(profit);
+    taxArea.innerHTML = Math.floor(tax_fee);
+    profitArea.innerHTML = Math.floor(profit);
   });
 };
 

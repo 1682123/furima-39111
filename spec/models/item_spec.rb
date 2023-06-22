@@ -81,17 +81,17 @@ RSpec.describe Item, type: :model do
       it 'priceが300より少ない時は出品できない' do
         @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price  Please input 300~9,999,999"
+        expect(@item.errors.full_messages).to include "Price Please input 300~9,999,999"
       end
       it 'priceが9999999より大きい時は出品できない' do
-        @item.price = 299
+        @item.price = 10000000
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price  Please input 300~9,999,999"
+        expect(@item.errors.full_messages).to include "Price Please input 300~9,999,999"
       end
       it 'priceが半角数値でない時は出品できない' do
         @item.price = "３００"
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price  Please input 300~9,999,999"
+        expect(@item.errors.full_messages).to include "Price Please input 300~9,999,999"
       end
       it 'imageが空では出品できない' do
         @item.image = nil
