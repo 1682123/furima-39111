@@ -1,6 +1,9 @@
 class OrderBuyerRecord
   include ActiveModel::Model
   attr_accessor :postcode, :prefecture_id, :city, :block, :building, :phone_number, :buyer_record_id, :user_id, :item_id 
+  attr_accessor :token
+  
+  validates :token, presence: true
 
   with_options presence: true do
     validates :user_id
