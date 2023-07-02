@@ -40,7 +40,7 @@ RSpec.describe OrderBuyerRecord, type: :model do
         expect(@order_buyer_record.errors.full_messages).to include "Prefecture can't be blank"
       end
       it "prefecture_idが初期値では保存できないこと" do
-        @order_buyer_record.prefecture_id = ""
+        @order_buyer_record.prefecture_id = 1
         @order_buyer_record.valid?
         expect(@order_buyer_record.errors.full_messages).to include "Prefecture can't be blank"
       end
@@ -59,8 +59,18 @@ RSpec.describe OrderBuyerRecord, type: :model do
         @order_buyer_record.valid?
         expect(@order_buyer_record.errors.full_messages).to include "Phone number can't be blank"
       end
-      it "phone_numberは10桁以上11桁以内の半角数値でなければ保存できないこと" do
+      it "phone_numberは10桁以上の半角数値でなければ保存できないこと" do
+        @order_buyer_record.phone_number = "123456789"
+        @order_buyer_record.valid?
+        expect(@order_buyer_record.errors.full_messages).to include "Phone number is invalid"
+      end
+      it "phone_numberは11桁以内の半角数値でなければ保存できないこと" do
         @order_buyer_record.phone_number = "123456789000"
+        @order_buyer_record.valid?
+        expect(@order_buyer_record.errors.full_messages).to include "Phone number is invalid"
+      end
+      it "phone_numberに半角数字以外が含まれている場合は保存できないこと" do
+        @order_buyer_record.phone_number = "０１２３４５６７８９"
         @order_buyer_record.valid?
         expect(@order_buyer_record.errors.full_messages).to include "Phone number is invalid"
       end
@@ -68,6 +78,16 @@ RSpec.describe OrderBuyerRecord, type: :model do
         @order_buyer_record.token = nil
         @order_buyer_record.valid?
         expect(@order_buyer_record.errors.full_messages).to include "Token can't be blank"
+      end
+      it "userが紐付いていなければ保存できないこと" do
+        @order_buyer_record.user_id = nil
+        @order_buyer_record.valid?
+        expect(@order_buyer_record.errors.full_messages).to include "User can't be blank"
+      end
+      it "itemが紐付いていなければ保存できないこと" do
+        @order_buyer_record.item_id = nil
+        @order_buyer_record.valid?
+        expect(@order_buyer_record.errors.full_messages).to include "Item can't be blank"
       end
     end
   end
